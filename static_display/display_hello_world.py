@@ -22,6 +22,7 @@ def display_static_image(epd):
     ### Display static image
     logging.info("Displaying static image...")
 
+    epd.init_Fast()
     Himage = Image.open(os.path.join(picdir, '2in7.bmp'))
     epd.display_Fast(epd.getbuffer(Himage))
     time.sleep(2)
