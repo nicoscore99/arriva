@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
 import sys
 import os
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
@@ -6,48 +8,48 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 import logging
-from waveshare_epd import epd2in7b_V2
+from waveshare_epd import epd2in7_V2
 import time
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image,ImageDraw,ImageFont
 import traceback
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
-font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
-font35 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 35)
-
-# def display_static_image(epd):
-#     ### Display static image
-#     logging.info("Displaying static image...")
-
-#     epd.init_Fast()
-#     Himage = Image.open(os.path.join(picdir, '2in7.bmp'))
-#     epd.display_Fast(epd.getbuffer(Himage))
-#     time.sleep(2)
-
+logging.basicConfig(level=logging.DEBUG)
 
 try:
-    logging.info("Initializing e-Paper display...")
-
-    epd = epd2in7b_V2.EPD()
-
+    logging.info("epd2in7 Demo")   
+    epd = epd2in7_V2.EPD()
+    
     logging.info("init and Clear")
     epd.init()
     epd.Clear()
-    time.sleep(1)
+    font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
+    font35 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 35)
 
-    logging.info("Drawing on display...")
+    # Quick refresh
     logging.info("Quick refresh demo")
-    Himage = Image.open(os.path.join(picdir, '2in7.bmp'))
-    epd.display_Fast(epd.getbuffer(Himage))
+    epd.init_Fast()
+    # Drawing on the Vertical image
+    logging.info("1.Drawing on the Vertical image...")
+    Limage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+    draw = ImageDraw.Draw(Limage)
+    draw.text((2, 0), 'hello world', font = font18, fill = 0)
+    draw.text((20, 50), u'微雪电子', font = font18, fill = 0)
+    draw.line((10, 90, 60, 140), fill = 0)
+    draw.line((60, 90, 10, 140), fill = 0)
+    draw.rectangle((10, 90, 60, 140), outline = 0)
+    draw.line((95, 90, 95, 140), fill = 0)
+    draw.line((70, 115, 120, 115), fill = 0)
+    draw.arc((70, 90, 120, 140), 0, 360, fill = 0)
+    draw.rectangle((10, 150, 60, 200), fill = 0)
+    draw.chord((70, 150, 120, 200), 0, 360, fill = 0)
+    epd.display_Fast(epd.getbuffer(Limage))
     time.sleep(2)
-    
-    logging.info("Finished displaying static image.")
-    logging.info("Going to sleep...")
-    epd.init()
+
+    logging.info("Clear...")
+    epd.init()   
     epd.Clear()
+    logging.info("Goto Sleep...")
     epd.sleep()
 
 except IOError as e:
