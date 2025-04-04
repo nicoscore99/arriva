@@ -18,14 +18,14 @@ font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
 font35 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 35)
 
-def display_static_image(epd):
-    ### Display static image
-    logging.info("Displaying static image...")
+# def display_static_image(epd):
+#     ### Display static image
+#     logging.info("Displaying static image...")
 
-    epd.init_Fast()
-    Himage = Image.open(os.path.join(picdir, '2in7.bmp'))
-    epd.display_Fast(epd.getbuffer(Himage))
-    time.sleep(2)
+#     epd.init_Fast()
+#     Himage = Image.open(os.path.join(picdir, '2in7.bmp'))
+#     epd.display_Fast(epd.getbuffer(Himage))
+#     time.sleep(2)
 
 
 try:
@@ -38,7 +38,12 @@ try:
     epd.Clear()
     time.sleep(1)
 
-    display_static_image(epd)
+    logging.info("Drawing on display...")
+    logging.info("Quick refresh demo")
+    epd.init_Fast()
+    Himage = Image.open(os.path.join(picdir, '2in7.bmp'))
+    epd.display_Fast(epd.getbuffer(Himage))
+    time.sleep(2)
     
     logging.info("Finished displaying static image.")
     logging.info("Going to sleep...")
