@@ -40,7 +40,6 @@ try:
 
     logging.info("Drawing on display...")
     logging.info("Quick refresh demo")
-    epd.init_Fast()
     Himage = Image.open(os.path.join(picdir, '2in7.bmp'))
     epd.display_Fast(epd.getbuffer(Himage))
     time.sleep(2)
