@@ -47,7 +47,7 @@ try:
     logging.info("Display Connections Page")
 
     # White image
-    Limage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+    Limage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Limage)
 
     # Side bar
@@ -59,7 +59,7 @@ try:
     Limage = Limage.transform(Limage.size, Image.AFFINE, (0, 1, -epd.width/2, -1, 0, epd.height/2))
 
     epd.display_Fast(epd.getbuffer(Limage))
-    time.sleep(2)
+    time.sleep(5)
 
     logging.info("Clear...")
     epd.init()   
