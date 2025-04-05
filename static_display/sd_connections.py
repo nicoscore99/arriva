@@ -38,7 +38,7 @@ try:
     
     logging.info("init and Clear")
     epd.init()
-    epd.Clear()
+    # epd.Clear()
     font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
     font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
     font35 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 35)
@@ -63,7 +63,7 @@ try:
 
     logging.info("Clear...")
     epd.init()   
-    epd.Clear()
+    # epd.Clear()
     logging.info("Goto Sleep...")
     epd.sleep()
 
