@@ -24,4 +24,4 @@ def get_current_ssid_linux():
 
 if __name__ == "__main__":
     get_current_wifi_strength()
-    get_current_ssid_linux()
+    print(get_current_ssid_linux())
