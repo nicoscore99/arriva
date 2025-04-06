@@ -22,6 +22,29 @@ def get_current_ssid_linux():
     except subprocess.CalledProcessError as e:
         return f"An error occurred: {e}"
 
+def signal_strength_discretization(signal_strength):
+    """
+    Discretize the signal strength into categories.
+    
+    Args:
+        signal_strength (int): The signal strength in dBm.
+
+    Returns:
+        int: The level of signal strength (0-5).
+
+    """
+
+    if signal_strength >= -50:
+        return 5  # Excellent
+    elif signal_strength >= -60:
+        return 4  # Good
+    elif signal_strength >= -70:
+        return 3  # Fair
+    elif signal_strength >= -80:
+        return 2  # Weak
+    else:
+        return 1  # Very Weak
+    
 if __name__ == "__main__":
     get_current_wifi_strength()
     print(get_current_ssid_linux())

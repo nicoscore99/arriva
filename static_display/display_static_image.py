@@ -15,14 +15,14 @@ from transformations import on_raspi
 logging.basicConfig(level=logging.DEBUG)
 
 # import the static image class
-from displays import ConnectionsFrame
+from displays import ConnectionsFrame, SignalFrame, ErrorFrame
 
 def main():
 
     # Create an instance of the StaticImage class
-    static_image = ConnectionsFrame()
+    static_image = SignalFrame()
     # Get the image
-    image = static_image.get("Mosnang, SG")
+    image = static_image.get("ash", 4)
 
     # Check if the current device is Raspberry Pi
     raspberry_pi = on_raspi()
