@@ -22,7 +22,7 @@ def main():
     # Create an instance of the StaticImage class
     static_image = ConnectionsFrame()
     # Get the image
-    image = static_image.get()
+    image = static_image.get("Mosnang, SG")
 
     # Check if the current device is Raspberry Pi
     raspberry_pi = on_raspi()
@@ -63,6 +63,9 @@ def main():
     else:
         try:
             # Dispay the image on screen
+
+            # Rotate image by 90 degrees
+            image = image.rotate(90, expand=True)
             image.show()
             time.sleep(5)
             # Close the image window
