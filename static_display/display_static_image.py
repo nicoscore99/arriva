@@ -10,31 +10,22 @@ if os.path.exists(libdir):
 import traceback
 import logging
 import time
+from transformations import on_raspi
 
 logging.basicConfig(level=logging.DEBUG)
 
 # import the static image class
-from static_connections import StaticImage
+from displays import ConnectionsFrame
 
 def main():
 
     # Create an instance of the StaticImage class
-    static_image = StaticImage()
+    static_image = ConnectionsFrame()
     # Get the image
     image = static_image.get()
 
     # Check if the current device is Raspberry Pi
-    raspberry_pi = False
-    if os.path.exists('/proc/device-tree/model'):
-        with open('/proc/device-tree/model', 'r') as f:
-            model = f.read().strip()
-            if 'Raspberry Pi' in model:
-                raspberry_pi = True
-                print("Running on Raspberry Pi")
-            else:
-                print("Not running on Raspberry Pi")
-    else:
-        print("Not running on Raspberry Pi")
+    raspberry_pi = on_raspi()
 
     if raspberry_pi:
         try:

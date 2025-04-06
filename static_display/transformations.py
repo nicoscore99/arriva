@@ -41,3 +41,25 @@ def png_to_bmp(image_path, image_name):
     bitmap_image = Image.alpha_composite(background, png_image).convert('1')
 
     return bitmap_image
+
+def on_raspi():
+    """
+    Check if the current device is a Raspberry Pi.
+
+    Returns:
+        bool: True if running on Raspberry Pi, False otherwise.
+    """
+
+    raspberry_pi = False
+    if os.path.exists('/proc/device-tree/model'):
+        with open('/proc/device-tree/model', 'r') as f:
+            model = f.read().strip()
+            if 'Raspberry Pi' in model:
+                raspberry_pi = True
+                print("Running on Raspberry Pi")
+            else:
+                print("Not running on Raspberry Pi")
+    else:
+        print("Not running on Raspberry Pi")
+
+    return raspberry_pi
