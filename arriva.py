@@ -118,9 +118,8 @@ class Arriva:
         stop_point_ref = self.config['Haltestelle_Didok']
         current_location = self.config['Haltestelle']
         departure_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
-        number_of_results = self.config['number_of_results']
 
-        connections = self.connections_query.get_connections(stop_point_ref, departure_time, number_of_results)
+        connections = self.connections_query.get_connections(stop_point_ref, departure_time)
         connections_formatted = self.connections_formatting(connections)
         image = self.connections_frame.get(current_location, connections_formatted)
 
