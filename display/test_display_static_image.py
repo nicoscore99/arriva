@@ -28,16 +28,16 @@ def main():
             # Initialize the display
             epd = epd2in7_V2.EPD()
             epd.init()
+            epd.Clear_NoBlink()
             
-
             # Display the image
             epd.display_NoBlink(epd.getbuffer(image))
 
             time.sleep(5)
             # Clear the display
             epd.init()
-            epd.Clear()
-
+            epd.Clear_NoBlink()
+            
             # Sleep to save power
             epd.sleep()
         except IOError as e:
