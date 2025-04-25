@@ -23,10 +23,10 @@ def main():
     if raspberry_pi:
         try:
             # import waveshare_epd library for Raspberry Pi
-            from waveshare_epd import epd2in7_V2
+            from waveshare_epd.epd2in7_V2 import EPD
 
             # Initialize the display
-            epd = epd2in7_V2.EPD()
+            epd = EPD()
             epd.init()
             epd.Clear_NoBlink()
             
