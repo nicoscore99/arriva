@@ -9,7 +9,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from transformations import invert_colors, png_to_bmp, on_raspi
+from .transformations import invert_colors, png_to_bmp, on_raspi
 
 font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
