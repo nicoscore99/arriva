@@ -1,36 +1,43 @@
 import requests
 
 # Your XML data
-xml_data = '''<?xml version="1.0" encoding="UTF-8"?>
-<Trias version="1.1" xmlns="http://www.vdv.de/trias" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <ServiceRequest>
-        <siri:RequestTimestamp>2024-02-19T21:45:55.102Z</siri:RequestTimestamp>
-        <siri:RequestorRef>API-Explorer</siri:RequestorRef>
-        <RequestPayload>
-            <StopEventRequest>
+xml_data = '''<OJP xmlns="http://www.vdv.de/ojp" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.vdv.de/ojp" version="2.0">
+    <OJPRequest>
+        <siri:ServiceRequest>
+            <siri:ServiceRequestContext>
+                <siri:Language>de</siri:Language>
+            </siri:ServiceRequestContext>
+            <siri:RequestTimestamp>2025-04-24T14:11:26.795Z</siri:RequestTimestamp>
+            <siri:RequestorRef>SKIPlus</siri:RequestorRef>
+            <OJPStopEventRequest>
+                <siri:RequestTimestamp>2025-04-24T14:11:26.795Z</siri:RequestTimestamp>
+                <siri:MessageIdentifier>SER_1</siri:MessageIdentifier>
                 <Location>
-                    <LocationRef>
-                        <StopPointRef>8507000</StopPointRef>
-                    </LocationRef>
-                    <DepArrTime>2024-03-19T22:45:55</DepArrTime>
+                    <PlaceRef>
+                        <siri:StopPointRef>8507000</siri:StopPointRef>
+                        <Name>
+                            <Text>Bern</Text>
+                        </Name>
+                    </PlaceRef>
+                    <DepArrTime>2025-04-24T14:11:26.795Z</DepArrTime>
                 </Location>
                 <Params>
-                    <NumberOfResults>1</NumberOfResults>
+                    <NumberOfResults>2</NumberOfResults>
                     <StopEventType>departure</StopEventType>
-                    <IncludePreviousCalls>true</IncludePreviousCalls>
-                    <IncludeOnwardCalls>true</IncludeOnwardCalls>
-                    <IncludeRealtimeData>true</IncludeRealtimeData>
+                    <IncludePreviousCalls>false</IncludePreviousCalls>
+                    <IncludeOnwardCalls>false</IncludeOnwardCalls>
+                    <UseRealtimeData>full</UseRealtimeData>
                 </Params>
-            </StopEventRequest>
-        </RequestPayload>
-    </ServiceRequest>
-</Trias>'''
+            </OJPStopEventRequest>
+        </siri:ServiceRequest>
+    </OJPRequest>
+</OJP>'''
 
 # The endpoint you're sending the request to
-url = 'https://api.opentransportdata.swiss/trias2020'
+url = 'https://api.opentransportdata.swiss/ojp20'
 
 # Assuming you have your API key
-api_key = 'eyJvcmciOiI2NDA2NTFhNTIyZmEwNTAwMDEyOWJiZTEiLCJpZCI6ImIwODQ1ZGI2MTdjMDRmNzhhMDAwMWMwZjMwOTllYTZhIiwiaCI6Im11cm11cjEyOCJ9'
+api_key = 'eyJvcmciOiI2NDA2NTFhNTIyZmEwNTAwMDEyOWJiZTEiLCJpZCI6IjQyNjVkM2RjODEyODQ3ZDJhZjg5MTQ1Mzg2MTYyY2IwIiwiaCI6Im11cm11cjEyOCJ9'
 
 # Additional headers with the Authorization header
 headers = {

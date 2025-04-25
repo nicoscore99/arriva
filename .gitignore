@@ -6,3 +6,6 @@ __pycache__/
 .ipynb_checkpoints
 # Ignore all .ipynb files
 *.ipynb
+
+# Pytest cache files
+__pycache__/
