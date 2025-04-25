@@ -1,6 +1,5 @@
 #!/usr/bin/python
-
-import datetime
+from datetime import datetime
 import logging
 import time
 import traceback
@@ -43,7 +42,7 @@ def main():
     # Get the content
     stop_point_ref = '8573984'  # Example stop point reference
     current_location = 'Mosnang, Dorf'
-    departure_time = datetime.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
+    departure_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
     number_of_results = 4  # Example number of results
 
     connections = connections_query.get_connections(stop_point_ref, departure_time, number_of_results)
