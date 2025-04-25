@@ -23,11 +23,15 @@ def main():
     if raspberry_pi:
         try:
             # import waveshare_epd library for Raspberry Pi
-            from waveshare_epd.epd2in7_V2 import EPD
+            from waveshare_epd import epd2in7_V2
 
             # Initialize the display
             epd = EPD()
             epd.init()
+
+            # Reset the display
+            epd.reset()
+
             epd.Clear_NoBlink()
             
             # Display the image
