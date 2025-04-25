@@ -359,6 +359,18 @@ class EPD:
             for i in range(Width):
                 self.send_data(image[i + j * Width])
         self.TurnOnDisplay_Fast()
+
+    def display_NoBlink(self, image):
+        if(self.width % 8 == 0):
+            Width = self.width // 8
+        else:
+            Width = self.width // 8 + 1
+        Height = self.height
+        self.send_command(0x24)
+        for j in range(Height):
+            for i in range(Width):
+                self.send_data(image[i + j * Width])
+        self.TurnOnDisplay_Partial()  # <<<<<< No full blinking
         
     def display_Base(self, image):
         if(self.width % 8 == 0):
