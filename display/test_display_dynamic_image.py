@@ -107,4 +107,4 @@ def main():
                 image.close()
 
 if __name__ == '__main__':
-    main())
+    main()
