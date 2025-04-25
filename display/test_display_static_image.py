@@ -26,7 +26,7 @@ def main():
             from waveshare_epd import epd2in7_V2
 
             # Initialize the display
-            epd = EPD()
+            epd = epd2in7_V2.EPD()
             epd.init()
 
             # Reset the display
