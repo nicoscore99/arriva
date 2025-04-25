@@ -66,16 +66,12 @@ def main():
 
             # Initialize the display
             epd = epd2in7_V2.EPD()
-            epd.init()
-            epd.Clear()
 
             # Display the image
             epd.display(epd.getbuffer(image))
 
             time.sleep(5)
             # Clear the display
-            epd.init()
-            epd.Clear()
 
             # Sleep to save power
             epd.sleep()
