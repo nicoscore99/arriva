@@ -4,12 +4,13 @@ import sys
 import os
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
+transformdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'display')
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from .transformations import invert_colors, png_to_bmp, on_raspi
+from transformations import invert_colors, png_to_bmp, on_raspi
 
 font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
