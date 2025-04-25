@@ -115,8 +115,8 @@ class Arriva:
         
         # get_connections(self, stop_point_ref, departure_time, number_of_results=4):
 
-        stop_point_ref = self.config['stop_point_ref']
-        current_location = self.config['current_location']
+        stop_point_ref = self.config['Haltestelle_Didok']
+        current_location = self.config['Haltestelle']
         departure_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
         number_of_results = self.config['number_of_results']
 
