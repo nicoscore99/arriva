@@ -35,16 +35,17 @@ class SignalQueryEngine:
         Returns:
             int: The signal strength in dBm or an error message.
         """
-        try:
-            self.iface.scan()  # Start scanning
-            time.sleep(2)  # Wait for scan results
-            results = self.iface.scan_results()
-            for network in results:
-                # Here you can access network.signal for signal strength
-                return network.signal
-        except Exception as e:
-            return f"An error occurred: {e}"
-        
+        result = subprocess.run(['iwconfig'], stdout=subprocess.PIPE, text=True)
+        if result.stdout:
+            for line in result.stdout.split('\n'):
+                if 'Signal level' in line:
+                    # Extract the signal level using regex
+                    wifi_details = re.search(r'Signal level=(-?\d+)', line).group(1)
+
+                    return int(wifi_details)
+                
+        return None
+                
     def signal_strength_discretization(self, signal_strength):
         """
         Discretize the signal strength into categories.
@@ -55,6 +56,9 @@ class SignalQueryEngine:
         Returns:
             int: The level of signal strength (0-5).
         """
+        if signal_strength is None:
+            return None  # Handle case where signal strength is not available
+
         if signal_strength >= -50:
             return 5
         elif signal_strength >= -60:
