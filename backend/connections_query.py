@@ -70,11 +70,6 @@ class ConnectionsQueryEngine:
                 </OJPRequest>
             </OJP>'''
         
-        # Print the XML request for debugging
-        print("XML Request:")
-        print(xml_request)
-
-
         # Send the request to the API
         response = requests.post(self.url, headers=self.headers, data=xml_request)
 

@@ -66,7 +66,7 @@ class Arriva:
         with open(self.config_path, 'r') as file:
             self.config = yaml.safe_load(file)
 
-    def evaluate_frame_logic(self):
+    def update_screen(self):
         """
         Evaluate the frame logic based on the current status.
         """
@@ -84,7 +84,7 @@ class Arriva:
         # Main loop to check the status and update the display accordingly
         while True:
             # Check the status and display the corresponding frame
-            self.evaluate_frame_logic()             
+            self.update_screen()             
             
             # Wait 1 minute before checking again
             time.sleep(60)
@@ -148,6 +148,7 @@ class Arriva:
         Callback function for button 1 press.
         """
         self.status = 1
+        self.update_screen()
         print("Button 1 pressed")
 
     def button2_callback(self):
@@ -155,6 +156,7 @@ class Arriva:
         Callback function for button 2 press.
         """
         self.status = 2
+        self.update_screen()
         print("Button 2 pressed")
 
     def button3_callback(self):
@@ -162,6 +164,7 @@ class Arriva:
         Callback function for button 3 press.
         """
         self.status = 3
+        self.update_screen()
         print("Button 3 pressed")
 
     def button4_callback(self):
@@ -169,7 +172,7 @@ class Arriva:
         Callback function for button 4 press. This is the update button. It does not update the status, but calls the display logic again.
         """
 
-        self.evaluate_frame_logic()
+        self.update_screen()
         print("Button 4 pressed")
 
 if __name__ == '__main__':

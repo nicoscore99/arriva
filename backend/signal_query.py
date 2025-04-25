@@ -79,8 +79,6 @@ class SignalQueryEngine:
         """
         ssid = self.get_current_ssid()
         signal_strength = self.get_signal_strength()
-
-        print(f"SSID: {ssid}, Signal Strength: {signal_strength} dBm")
         signal_strength_level = self.signal_strength_discretization(signal_strength)
         
         return ssid, signal_strength_level
