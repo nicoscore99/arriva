@@ -6,7 +6,7 @@ import re
 
 
 
-class WifiQueryEngine:
+class SignalQueryEngine:
     """
     Class to query WiFi information.
     """
