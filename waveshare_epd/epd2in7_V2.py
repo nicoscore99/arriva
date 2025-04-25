@@ -336,6 +336,20 @@ class EPD:
                 self.send_data(0XFF)
         self.TurnOnDisplay()
     
+    def Clear_NoBlink(self):
+        if (self.width % 8) == 0:
+            Width = self.width // 8
+        else:
+            Width = self.width // 8 + 1
+        Height = self.height
+        self.send_command(0x24)  # Write RAM command
+        for j in range(Height):
+            for i in range(Width):
+                self.send_data(0xFF)  # White pixels
+        # DO NOT call TurnOnDisplay() here
+        # Just push the data silently
+        
+
     def display(self, image):
         if(self.width % 8 == 0):
             Width = self.width // 8

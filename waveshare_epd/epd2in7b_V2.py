@@ -189,7 +189,6 @@ class EPD:
                 self.send_data(0xFF)  # White pixels
         # DO NOT call TurnOnDisplay() here
         # Just push the data silently
-
         
     # Turn on display
     def TurnOnDisplay(self):
