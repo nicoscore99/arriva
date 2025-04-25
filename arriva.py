@@ -39,10 +39,10 @@ class Arriva:
 
         # Initialize the buttons and their callbacks
         self.status = 1  # Default status
-        self.button1 = BUTTON_PINS['button1']
-        self.button2 = BUTTON_PINS['button2']
-        self.button3 = BUTTON_PINS['button3']
-        self.button4 = BUTTON_PINS['button4']
+        self.button1 = Button(BUTTON_PINS['button1'])
+        self.button2 = Button(BUTTON_PINS['button2'])
+        self.button3 = Button(BUTTON_PINS['button3'])
+        self.button4 = Button(BUTTON_PINS['button4'])
 
         self.button1.when_pressed = self.button1_callback
         self.button2.when_pressed = self.button2_callback

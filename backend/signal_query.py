@@ -81,6 +81,6 @@ class SignalQueryEngine:
     
 if __name__ == "__main__":
 
-    wifi_query = WifiQueryEngine()
+    wifi_query = SignalQueryEngine()
     ssid, signal_strength_level = wifi_query.get_wifi_strength()
     print(f"SSID: {ssid}, Signal Strength Level: {signal_strength_level}")
