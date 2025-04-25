@@ -3,6 +3,11 @@ import time
 import os
 import threading
 import yaml
+import sys
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'display')))
+
 from display.displays import ConnectionsFrame, SignalFrame, ErrorFrame
 from backend.connections_query import ConnectionsQueryEngine
 from backend.signal_query import SignalQueryEngine
