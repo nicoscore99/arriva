@@ -4,7 +4,8 @@ import os
 import threading
 import yaml
 from display.displays import ConnectionsFrame, SignalFrame, ErrorFrame
-from backend.connections_query import ConnectionsQuery
+from backend.connections_query import ConnectionsQueryEngine
+from backend.signal_query import SignalQueryEngine
 from gpiozero import Button, LED
 from waveshare_epd import epd2in7_V2
 
@@ -43,12 +44,12 @@ class Arriva:
         self.button3.when_pressed = self.button3_callback
         self.button4.when_pressed = self.button4_callback
 
-        self.connections_query = ConnectionsQuery()
+        self.connections_query = ConnectionsQueryEngine()
         self.connections_frame = ConnectionsFrame()
-        self.signal_query = SignalQuery()
+        self.signal_query = SignalQueryEngine()
         self.signal_frame = SignalFrame()
-        self.error_query = ErrorQuery()
-        self.error_frame = ErrorFrame()
+        # self.error_query = ErrorQuery()
+        # self.error_frame = ErrorFrame()
 
     def load_config(self):
         """
@@ -69,7 +70,7 @@ class Arriva:
         elif self.status == 2:
             self.signal_frame_logic()
         elif self.status == 3:
-            self.error_frame_logic()
+            pass # TODO: Implement error frame logic
 
     def run(self):
         """
@@ -125,7 +126,11 @@ class Arriva:
         Logic to handle signal frame.
         """
         
-        pass # TODO
+        # get_wifi_strength(self):
+        ssid, signal_strength_level = self.signal_query.get_wifi_strength()
+        image = self.signal_frame.get(ssid, signal_strength_level)
+
+        self.epd.display(self.epd.getbuffer(image))
 
     def error_frame_logic(self):
         """

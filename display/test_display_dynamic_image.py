@@ -1,11 +1,5 @@
 #!/usr/bin/python
-# -*- coding:utf-8 -*-
-import traceback
-import logging
-import time
-from datetime import datetime
-from display.transformations import on_raspi, invert_colors, png_to_bmp
-logging.basicConfig(level=logging.DEBUG)
+
 
 # import the static image class
 from displays import ConnectionsFrame
