@@ -37,7 +37,7 @@ def main():
             # Clear the display
             epd.init()
             epd.Clear_NoBlink()
-            
+
             # Sleep to save power
             epd.sleep()
         except IOError as e:
