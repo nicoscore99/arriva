@@ -4,8 +4,8 @@ import os
 import threading
 import yaml
 from display.displays import ConnectionsFrame, SignalFrame, ErrorFrame
-from backend.connections_query import ConnectionsQueryEngine
-from backend.signal_query import SignalQueryEngine
+from .backend.connections_query import ConnectionsQueryEngine
+from .backend.signal_query import SignalQueryEngine
 from gpiozero import Button, LED
 from waveshare_epd import epd2in7_V2
 
