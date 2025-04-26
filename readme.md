@@ -3,10 +3,10 @@
 Arriva is a Raspberry Pi-based system designed to display public transport connections and alerts at a specified location. It integrates with APIs to fetch real-time data and uses an e-paper display for energy-efficient, clear, and persistent information.
 
 Illustration of the information that is being displayed:
-<p align="center">
-  <img src="pic/connections_frame.png" alt="Image 1" width="30%" />
-  <img src="pic/error_frame.png" alt="Image 2" width="30%" />
-  <img src="pic/signal_frame.png" alt="Image 3" width="30%" />
+<p align="center" style="display: flex; justify-content: center; gap: 10px;">
+  <img src="pic/connections_frame.png" alt="Image 1" width="30%" style="border: 2px solid black; padding: 5px;" />
+  <img src="pic/error_frame.png" alt="Image 2" width="30%" style="border: 2px solid black; padding: 5px;" />
+  <img src="pic/signal_frame.png" alt="Image 3" width="30%" style="border: 2px solid black; padding: 5px;" />
 </p>
 
 ## Features
