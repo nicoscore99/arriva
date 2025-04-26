@@ -65,7 +65,7 @@ def main():
             # Initialize the display
             epd = epd2in7_V2.EPD()
             epd.init()
-            epd.Clear(0xFF)
+            epd.Clear()
 
             # Display the image
             
