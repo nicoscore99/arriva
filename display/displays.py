@@ -120,14 +120,14 @@ class ConnectionsFrame(MainFrame):
             for i, connection in enumerate(args[1]):
 
                 # Move the coordinates down for the next connection
-                self.C1 = (self.C1[0], self.C1[1] + 24)
-                self.C2 = (self.C2[0], self.C2[1] + 24)
-                self.C3 = (self.C3[0], self.C3[1] + 24)
+                C1_curr = (self.C1[0], self.C1[1] + 24)
+                C2_curr = (self.C2[0], self.C2[1] + 24)
+                C3_curr = (self.C3[0], self.C3[1] + 24)
 
                 # Draw the connection text
-                self.draw.text(self.C1, connection[0], font=font18, fill=0, anchor="lt")
-                self.draw.text(self.C2, connection[1], font=font18, fill=0, anchor="lt")
-                self.draw.text(self.C3, connection[2], font=font18, fill=0, anchor="mt")
+                self.draw.text(C1_curr, connection[0], font=font18, fill=0, anchor="lt")
+                self.draw.text(C2_curr, connection[1], font=font18, fill=0, anchor="lt")
+                self.draw.text(C3_curr, connection[2], font=font18, fill=0, anchor="mt")
 
         return image
     
@@ -146,6 +146,9 @@ class SignalFrame(MainFrame):
         # Get the image from the parent class
         image = super().get(*args)
 
+        # Image reset
+        self.reset()
+
         # First args is SSID, second args is signal strength
         if len(args) > 2: 
             raise ValueError("Too many arguments provided.")
@@ -159,19 +162,19 @@ class SignalFrame(MainFrame):
             self.draw.text(self.C1, "SSID: ", font=font18, fill=0, anchor="lt")
             self.draw.text(self.C4, args[0], font=font18, fill=0, anchor="lt")
 
-            self.C1 = (self.C1[0], self.C1[1] + 24)
-            self.C4 = (self.C4[0], self.C4[1] + 24)
+            C1_curr = (self.C1[0], self.C1[1] + 24)
+            C4_curr = (self.C4[0], self.C4[1] + 24)
 
             self.draw.text(self.C1, "Signal: ", font=font18, fill=0, anchor="lt")
 
             # Display the signal strength with square icons, always 5 squares, signal strength equals number of dark filles squares, the rest are grey
             for i in range(5):
                 if i < args[1]:
-                    self.draw.rectangle([(self.C4[0], self.C4[1]), (self.C4[0] + 20, self.C4[1] + 20)], fill=0)
+                    self.draw.rectangle([(C4_curr[0], self.C4[1]), (C4_curr[0] + 20, C4_curr[1] + 20)], fill=0)
                 else:
                     # TODO: This is not fully working yet, needs improvement
-                    self.draw.rectangle([(self.C4[0], self.C4[1]), (self.C4[0] + 20, self.C4[1] + 20)], fill=self.GRAY3)
-                self.C4 = (self.C4[0] + 24, self.C4[1])
+                    self.draw.rectangle([(C4_curr[0], C4_curr[1]), (C4_curr[0] + 20, C4_curr[1] + 20)], fill=self.GRAY3)
+                C4_curr = (C4_curr[0] + 24, C4_curr[1])
             
             print(self.Limage.mode)
 
