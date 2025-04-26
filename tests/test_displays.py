@@ -30,3 +30,13 @@ def test_SignalFrame():
     assert isinstance(image, Image.Image), "Image should be of type PIL.Image.Image"
     assert image.size == (EPD_HEIGHT, EPD_WIDTH), f"Image size should be {(EPD_HEIGHT, EPD_WIDTH)}"
     assert image.mode == 'L', "Image mode should be 'L' (grayscale)"
+
+def test_ErrorFrame():
+
+    errorframe = ErrorFrame()
+    image = errorframe.get("Error message")
+
+    assert image is not None, "Image should not be None"
+    assert isinstance(image, Image.Image), "Image should be of type PIL.Image.Image"
+    assert image.size == (EPD_HEIGHT, EPD_WIDTH), f"Image size should be {(EPD_HEIGHT, EPD_WIDTH)}"
+    assert image.mode == 'L', "Image mode should be 'L' (grayscale)"

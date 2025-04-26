@@ -73,13 +73,7 @@ class Arriva:
         """
         Evaluate the frame logic based on the current status.
         """
-
         try:
-
-            # test: raise an exception to test the error frame logic
-
-            raise Exception("Test exception for error frame logic")
-
             if self.status == 1:
                 self.connections_frame_logic()
             elif self.status == 2:
