@@ -10,7 +10,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from transformations import invert_colors, png_to_bmp, on_raspi
+from transformations import invert_colors, png_to_bmp, on_raspi, draw_multiline_text
 
 font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
@@ -178,6 +178,10 @@ class ErrorFrame(MainFrame):
     def __init__(self):       
         super().__init__()
 
+    def get(self, *args):
+        # Get the image from the parent class
+        image = super().get(*args)
+
         # Invert the image of the error
         icon_error = invert_colors(self.icon_error)
         self.Limage.paste(icon_error, (self.P4[0], self.P4[1]))
@@ -185,8 +189,18 @@ class ErrorFrame(MainFrame):
         # Draw title
         self.draw.text(self.T1, 'Error', font=font24, fill=0, anchor="lt")
 
-    def get(self, arg1, *args):
-        # Get the image from the parent class
-        image = super().get(arg1, *args)
+        error_text = args[0]
+
+        y_padding = 8
+        x_padding = 8
+
+        height = self.E3[1] - self.P2[1] - y_padding * 2
+        width = self.E2[0] - self.P2[0] - x_padding * 2
+       
+        # Draw the error text
+        error_image = draw_multiline_text(width, height, font18, error_text)
+
+        # Paste the error image onto the main image
+        self.Limage.paste(error_image, (self.P2[0] + x_padding, self.P2[1] + y_padding))
 
         return image

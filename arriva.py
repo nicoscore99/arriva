@@ -54,7 +54,7 @@ class Arriva:
         self.signal_query = SignalQueryEngine()
         self.signal_frame = SignalFrame()
         # self.error_query = ErrorQuery()
-        # self.error_frame = ErrorFrame()
+        self.error_frame = ErrorFrame()
 
         # First screen update
         self.update_screen()
@@ -73,12 +73,21 @@ class Arriva:
         """
         Evaluate the frame logic based on the current status.
         """
-        if self.status == 1:
-            self.connections_frame_logic()
-        elif self.status == 2:
-            self.signal_frame_logic()
-        elif self.status == 3:
-            pass # TODO: Implement error frame logic
+
+        try:
+
+            # test: raise an exception to test the error frame logic
+
+            raise Exception("Test exception for error frame logic")
+
+            if self.status == 1:
+                self.connections_frame_logic()
+            elif self.status == 2:
+                self.signal_frame_logic()
+            elif self.status == 3:
+                self.error_frame_logic()
+        except Exception as e:
+            self.error_frame_logic(e)
 
     def run(self):
         """
@@ -139,12 +148,20 @@ class Arriva:
 
         self.epd.display(self.epd.getbuffer(image))
 
-    def error_frame_logic(self):
+    def error_frame_logic(self, error=None):
         """
         Logic to handle error frame.
         """
         
-        pass # TODO
+        # get_error(self):
+        if error:
+            error_message = str(error)
+        else:
+            error_message = "Everything is fine!"
+
+        image = self.error_frame.get(error_message)
+
+        self.epd.display(self.epd.getbuffer(image))
 
     def button1_callback(self):
         """
