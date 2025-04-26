@@ -15,7 +15,7 @@ def main():
     # Create an instance of the StaticImage class
     static_image = SignalFrame()
     # Get the image
-    image = static_image.get("ash", 2)
+    image = static_image.get("MyWifi", 2)
 
     # Check if the current device is Raspberry Pi
     raspberry_pi = on_raspi()
@@ -32,15 +32,15 @@ def main():
             # Reset the display
             epd.reset()
 
-            epd.Clear_NoBlink()
+            epd.Clear()
             
             # Display the image
-            epd.display_NoBlink(epd.getbuffer(image))
+            epd.display(epd.getbuffer(image))
 
             time.sleep(5)
             # Clear the display
             epd.init()
-            epd.Clear_NoBlink()
+            epd.Clear()
 
             # Sleep to save power
             epd.sleep()
@@ -62,7 +62,6 @@ def main():
             # Dispay the image on screen
 
             # Rotate image by 90 degrees
-            image = image.rotate(90, expand=True)
             image.show()
             time.sleep(5)
             # Close the image window

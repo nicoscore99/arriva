@@ -126,7 +126,7 @@ class ConnectionsFrame(MainFrame):
                 self.draw.text(C2_curr, connection[1], font=font18, fill=0, anchor="lt")
                 self.draw.text(C3_curr, connection[2], font=font18, fill=0, anchor="mt")
 
-        return image
+        return self.Limage
     
 class SignalFrame(MainFrame):
     def __init__(self):
@@ -172,7 +172,7 @@ class SignalFrame(MainFrame):
                     self.draw.rectangle([(C4_curr[0], C4_curr[1]), (C4_curr[0] + 20, C4_curr[1] + 20)], fill=self.GRAY3)
                 C4_curr = (C4_curr[0] + 24, C4_curr[1])
 
-        return image
+        return self.Limage
     
 class ErrorFrame(MainFrame):
     def __init__(self):       

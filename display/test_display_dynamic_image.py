@@ -98,7 +98,7 @@ def main():
             # Dispay the image on screen
 
             # Rotate image by 90 degrees
-            image = image.rotate(90, expand=True)
+            # image = image.rotate(90, expand=True)
             image.show()
             time.sleep(5)
             # Close the image window
