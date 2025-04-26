@@ -92,11 +92,7 @@ pytest
 ```
 
 ### Adding Dependencies
-Add new dependencies to `requirements.txt` and update `setup.py` if necessary.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+Add new dependencies to `requirements.txt`.
 
 ## Acknowledgments
 
