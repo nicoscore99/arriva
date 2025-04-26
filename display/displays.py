@@ -68,6 +68,17 @@ class MainFrame:
 
         self.draw.line(self.P2+self.P8, fill=0, width=2)
 
+    def reset(self):
+        # Reset the image to white
+        self.Limage = Image.new('L', (264, 176), 255)
+        self.draw = ImageDraw.Draw(self.Limage)
+
+        # Re-draw the main frame elements
+        self.Limage.paste(self.icon_train, (self.P1[0], self.P1[1]))
+        self.Limage.paste(self.icon_signal, (self.P3[0], self.P3[1]))
+        self.Limage.paste(self.icon_error, (self.P4[0], self.P4[1]))
+        self.draw.line(self.P2+self.P8, fill=0, width=2)
+
     def get(self, *args):
         return self.Limage
 
@@ -92,6 +103,9 @@ class ConnectionsFrame(MainFrame):
     def get(self, *args):
         # Get the image from the parent class
         image = super().get(*args)
+
+        # Image reset
+        self.reset()
 
         # Set current location
         self.Limage.paste(self.icon_location, (self.C1[0], self.C1[1]))

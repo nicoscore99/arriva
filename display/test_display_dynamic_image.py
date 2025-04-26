@@ -64,12 +64,17 @@ def main():
 
             # Initialize the display
             epd = epd2in7_V2.EPD()
-            # epd.init()
+            epd.init()
+            epd.Clear(0xFF)
 
             # Display the image
-            epd.display(epd.getbuffer(image))
+            
+            for i in range(3):
+                # Rotate image by 90 degrees
+                image = frame.get(current_location, connections_formatted)
+                epd.display(epd.getbuffer(image))
+                time.sleep(5)
 
-            time.sleep(5)
             # Clear the display
             # epd.Clear()
 
