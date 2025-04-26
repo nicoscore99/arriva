@@ -110,5 +110,8 @@ For questions or support, contact [Nicolas Stillhard](mailto:nicolas.stillhard@g
 
 ## TODO
 
-- Remove blinking everytime screen changes
-- 
+Stuff that can be improved:
+
+- Expand EPD functionality to prevent blinking every time the screen changes
+- Flake8 the code
+- Implement functionality for button 4
