@@ -1,6 +1,11 @@
+# -*- coding: utf-8 -*-
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from backend.connections_query import ConnectionsQueryEngine
-import pytest
 from datetime import datetime
+
 
 def test_connections_query():
     """
