@@ -9,3 +9,6 @@ __pycache__/
 
 # Pytest cache files
 __pycache__/
+
+# Credentials
+backend/credentials.yaml

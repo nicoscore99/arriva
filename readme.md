@@ -2,6 +2,13 @@
 
 Arriva is a Raspberry Pi-based system designed to display public transport connections and alerts at a specified location. It integrates with APIs to fetch real-time data and uses an e-paper display for energy-efficient, clear, and persistent information.
 
+Illustration of the information that is being displayed:
+<p align="center">
+  <img src="pic/connections_frame.png" alt="Image 1" width="30%" />
+  <img src="pic/error_frame.png" alt="Image 2" width="30%" />
+  <img src="pic/signal_frame.png" alt="Image 3" width="30%" />
+</p>
+
 ## Features
 
 - **Real-Time Data**: Fetches live public transport connections and alerts using the [OpenTransportData API](https://opentransportdata.swiss/).
@@ -62,10 +69,11 @@ The system will display a welcome message on startup and then enter the main loo
 ## Configuration
 
 ### `config/arriva_config.yaml`
-- `update_interval`: Time (in seconds) between data updates.
-- `location`: Specify the location for which to fetch transport data.
+- `Haltestelle`: Departure location name
+- `Haltestelle_Didok`: Didok number of your departure location. To be found [here](https://opendata.swiss/de/dataset/dienststellen-gemass-opentransportdata-swiss).
 
 ### `backend/credentials.yaml`
+This file you need to add by yourself.
 - `api_key`: Your API key for accessing the OpenTransportData API.
 - `url`: The API endpoint.
 
