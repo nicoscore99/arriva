@@ -86,12 +86,12 @@ class ConnectionsFrame(MainFrame):
     def __init__(self):
         super().__init__()
 
-        # Dummy content
-        connection1 = ('S1', 'Wil, SG', "5'")
-        connection2 = ('S2', 'Wattwil, SG', "6'")
-        connection3 = ('S3', 'Zürich, ZH', "7'")
-        self.dummy_current_location = 'Mosnang, SG'
-        self.dummy_connections = [connection1, connection2, connection3]
+    def get(self, *args):
+        # Get the image from the parent class
+        image = super().get(*args)
+
+        # Image reset
+        self.reset()
 
         # Invert the image of train
         icon_train = invert_colors(self.icon_train)
@@ -99,13 +99,6 @@ class ConnectionsFrame(MainFrame):
 
         # Draw title
         self.draw.text(self.T1, 'Departure', font=font24, fill=0, anchor="lt")
-    
-    def get(self, *args):
-        # Get the image from the parent class
-        image = super().get(*args)
-
-        # Image reset
-        self.reset()
 
         # Set current location
         self.Limage.paste(self.icon_location, (self.C1[0], self.C1[1]))
@@ -139,16 +132,19 @@ class SignalFrame(MainFrame):
     def __init__(self):
         super().__init__()
 
+    def get(self, *args):
+        # Get the image from the parent class
+        image = super().get(*args)
+
+        # Reset the image
+        self.reset()
+
         # Invert the image of the signal
         icon_signal = invert_colors(self.icon_signal)
         self.Limage.paste(icon_signal, (self.P3[0], self.P3[1]))
 
         # Draw title
         self.draw.text(self.T1, 'Signal', font=font24, fill=0, anchor="lt")
-
-    def get(self, *args):
-        # Get the image from the parent class
-        image = super().get(*args)
 
         # First args is SSID, second args is signal strength
         if len(args) > 2: 
@@ -166,7 +162,7 @@ class SignalFrame(MainFrame):
             C1_curr = (self.C1[0], self.C1[1] + 24)
             C4_curr = (self.C4[0], self.C4[1] + 24)
 
-            self.draw.text(self.C1, "Signal: ", font=font18, fill=0, anchor="lt")
+            self.draw.text(C1_curr, "Signal: ", font=font18, fill=0, anchor="lt")
 
             # Display the signal strength with square icons, always 5 squares, signal strength equals number of dark filles squares, the rest are grey
             for i in range(5):
