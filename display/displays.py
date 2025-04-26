@@ -169,11 +169,8 @@ class SignalFrame(MainFrame):
                 if i < args[1]:
                     self.draw.rectangle([(C4_curr[0], C4_curr[1]), (C4_curr[0] + 20, C4_curr[1] + 20)], fill=0)
                 else:
-                    # TODO: This is not fully working yet, needs improvement
                     self.draw.rectangle([(C4_curr[0], C4_curr[1]), (C4_curr[0] + 20, C4_curr[1] + 20)], fill=self.GRAY3)
                 C4_curr = (C4_curr[0] + 24, C4_curr[1])
-            
-            print(self.Limage.mode)
 
         return image
     

@@ -56,6 +56,9 @@ class Arriva:
         # self.error_query = ErrorQuery()
         # self.error_frame = ErrorFrame()
 
+        # First screen update
+        self.update_screen()
+
     def load_config(self):
         """
         Load the configuration from the YAML file.
