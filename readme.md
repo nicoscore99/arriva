@@ -80,8 +80,7 @@ This file you need to add by yourself.
 ## Hardware Requirements
 
 - Raspberry Pi (any model with GPIO support)
-- Waveshare 2.7-inch e-paper display
-- Buttons connected to GPIO pins
+- [Waveshare 2.7-inch e-paper display](https://www.waveshare.com/2.7inch-e-paper-hat.htm)
 - Power supply
 
 ## Development
@@ -101,7 +100,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## Acknowledgments
 
-- [Waveshare](https://www.waveshare.com/) for the e-paper display and drivers.
+- [Waveshare](https://github.com/waveshareteam/e-Paper) for the e-paper display and drivers.
 - [OpenTransportData](https://opentransportdata.swiss/) for providing real-time transport data.
 
 ## Contact
