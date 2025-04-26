@@ -64,6 +64,7 @@ def on_raspi():
 
     return raspberry_pi
 
+
 def draw_multiline_text(w, h, font, text):
     """
     Draws multiline text on a blank image.
@@ -77,37 +78,39 @@ def draw_multiline_text(w, h, font, text):
     Returns:
         PIL.Image: Image with drawn multiline text.
     """
-    # Create a blank image
-    image = Image.new('L', (w, h), 255)  # White background
+    # Create a blank white image
+    image = Image.new('L', (w, h), 255)
     draw = ImageDraw.Draw(image)
 
     x, y = 0, 0
-    line_height = font.getsize(text)[1] + 2  # Add some padding
+    # Use getbbox instead of getsize
+    bbox = font.getbbox('A')
+    line_height = (bbox[3] - bbox[1]) + 4  # height + padding
 
     words = text.split(' ')
     line = ''
 
     for word in words:
-        # Try adding the word to the line
+        # Build the test line
         test_line = line + word + ' '
-        width, _ = draw.textsize(test_line, font=font)
+        bbox = font.getbbox(test_line)
+        width = bbox[2] - bbox[0]
 
         if width > w:
-            # Draw current line because next word would overflow
+            # Draw the current line
             draw.text((x, y), line.strip(), font=font, fill=0)
             y += line_height
 
             if y + line_height > h:
-                # Stop if no more space
+                # No more space, stop drawing
                 break
 
             line = word + ' '
         else:
             line = test_line
 
-    # Draw any remaining text
+    # Draw the last line if it fits
     if y + line_height <= h:
-        # Draw the last line if there's space
         draw.text((x, y), line.strip(), font=font, fill=0)
 
     return image
