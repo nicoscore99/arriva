@@ -3,15 +3,17 @@
 Arriva is a Raspberry Pi-based system designed to display public transport connections and alerts at a specified location. It integrates with APIs to fetch real-time data and uses an e-paper display for energy-efficient, clear, and persistent information.
 
 Illustration of the information that is being displayed:
-<p align="center" style="display: flex; justify-content: center; gap: 20px;">
-  <img src="pic/connections_frame.png" alt="Image 1" width="30%" style="border: 2px solid black; padding: 5px;" />
-  <img src="pic/signal_frame.png" alt="Image 3" width="30%" style="border: 2px solid black; padding: 5px;" />
-  <img src="pic/error_frame.png" alt="Image 2" width="30%" style="border: 2px solid black; padding: 5px;" />
+Illustration of the information that is being displayed:
+<p align="center" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; justify-items: center;">
+  <img src="pic/connections_frame.png" alt="Image 1" width="40%" style="border: 2px solid black; padding: 5px;" />
+  <img src="pic/signal_frame.png" alt="Image 2" width="40%" style="border: 2px solid black; padding: 5px;" />
+  <img src="pic/weather_frame.png" alt="Image 4" width="40%" style="border: 2px solid black; padding: 5px;" />
+  <img src="pic/error_frame.png" alt="Image 3" width="40%" style="border: 2px solid black; padding: 5px;" />
 </p>
 
 ## Features
 
-- **Real-Time Data**: Fetches live public transport connections and alerts using the [OpenTransportData API](https://opentransportdata.swiss/).
+- **Real-Time Data**: Fetches live public transport connections and alerts using the [OpenTransportData API](https://opentransportdata.swiss/) and live weather forecasts from [SRF Meteo API](https://developer.srgssr.ch/api-catalog/51).
 - **E-Paper Display**: Utilizes Waveshare's 2.7-inch e-paper display for low-power, high-contrast visuals.
 - **Configurable**: Easily customize settings via YAML configuration files.
 - **Button Controls**: Navigate through different display modes using physical buttons.
@@ -24,6 +26,7 @@ Illustration of the information that is being displayed:
 ├── backend/                 # Handles API queries and data processing
 │   ├── connections_query.py # Fetches connection data
 │   ├── signal_query.py      # Fetches signal data
+|   ├── weather_query.py     # Queries weather signal
 │   └── credentials.yaml     # API credentials
 ├── display/                 # Manages display logic
 │   ├── displays.py          # Frame rendering logic
@@ -74,8 +77,16 @@ The system will display a welcome message on startup and then enter the main loo
 
 ### `backend/credentials.yaml`
 This file you need to add by yourself.
+
+Under `OpenTransportData` change:
 - `api_key`: Your API key for accessing the OpenTransportData API.
 - `url`: The API endpoint.
+
+And under `MeteoMeteoProductFreemium` change the credentials to [the guide](https://developer.srgssr.ch/get-started):
+- `client_id`: Public consumer key SRF-Meteoapi (SRF-MeteoProductFreemium)
+- `client_secret`: Consumer Secret key for SRF-Meteoapi (SRF-MeteoProductFreemium)
+- `auth_url`: Needs to be `https://api.srgssr.ch/oauth/v1/accesstoken`
+- `forecast_url`: Needs to be `https://api.srgssr.ch/srf-meteo/forecast`
 
 ## Hardware Requirements
 
@@ -98,6 +109,7 @@ Add new dependencies to `requirements.txt`.
 
 - [Waveshare](https://github.com/waveshareteam/e-Paper) for the e-paper display and drivers.
 - [OpenTransportData](https://opentransportdata.swiss/) for providing real-time transport data.
+- [SRF Weather API](https://developer.srgssr.ch/en/apis/srf-meteoapi-v2) for providing live weather forecasts.
 
 ## Contact
 
@@ -109,4 +121,3 @@ Stuff that can be improved:
 
 - Expand EPD functionality to prevent blinking every time the screen changes
 - Flake8 the code
-- Implement functionality for button 4

@@ -2,6 +2,8 @@
 # -*- coding:utf-8 -*-
 import sys
 import os
+from datetime import datetime
+from dateutil import parser
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 transformdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'display')
@@ -173,6 +175,55 @@ class SignalFrame(MainFrame):
                 C4_curr = (C4_curr[0] + 24, C4_curr[1])
 
         return self.Limage
+    
+class WeatherFrame(MainFrame):
+    def __init__(self):
+        super().__init__()
+        
+        self.weather_positions =  [(39, 110), (101, 110), (163, 110), (225, 110)]
+
+    def get(self, *args):
+        # Directly pass the forcast array here
+
+        # Get the image from the parent class
+        image = super().get(*args)
+
+        # Reset the image
+        self.reset()
+
+        # Invert the image of the weather
+        icon_weather = invert_colors(self.icon_signal)
+        self.Limage.paste(icon_weather, (self.P3[0], self.P3[1]))
+
+        # Draw title
+        self.draw.text(self.T1, 'Weather', font=font24, fill=0, anchor="lt")
+
+        # Take the first 6 elements only
+        forecasts = args[0][:4]
+
+        for i, forecast in enumerate(forecasts):
+            if not isinstance(forecast, dict):
+                raise ValueError("Each forecast must be a dictionary.")
+
+            # Get the image
+            image_name = str(forecast['SYMBOL_CODE'])+'.png'
+            icon_weather = png_to_bmp(picdir, image_name).resize((60, 60))
+            icon_weather = ImageOps.expand(icon_weather, border=2, fill=255)
+
+            self.Limage.paste(icon_weather, (self.weather_positions[i][0]-30, self.weather_positions[i][1]-30))
+
+            # Get the weekday name 
+            weekday = parser.parse(forecast['local_date_time']).strftime('%A')[0:3]
+            self.draw.text((self.weather_positions[i][0], self.weather_positions[i][1]-25-15), weekday, font=font18, fill=0, anchor="mm")
+
+            # Get the temperature
+            temperature = (forecast['TX_C'] + forecast['TN_C']) / 2
+            temperature = round(temperature, 1)
+            temperature = str(temperature).replace('.', ',')
+
+            self.draw.text((self.weather_positions[i][0], self.weather_positions[i][1]+25+25), temperature + '°', font=font18, fill=0, anchor="mm")      
+
+        return self.Limage  
     
 class ErrorFrame(MainFrame):
     def __init__(self):       

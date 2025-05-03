@@ -8,7 +8,8 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'display')))
 
-from display.displays import ConnectionsFrame, SignalFrame, ErrorFrame
+from display.displays import ConnectionsFrame, SignalFrame, ErrorFrame, WeatherFrame
+from backend.weather_query import WeatherQueryEngine
 from backend.connections_query import ConnectionsQueryEngine
 from backend.signal_query import SignalQueryEngine
 from gpiozero import Button, LED
@@ -53,7 +54,8 @@ class Arriva:
         self.connections_frame = ConnectionsFrame()
         self.signal_query = SignalQueryEngine()
         self.signal_frame = SignalFrame()
-        # self.error_query = ErrorQuery()
+        self.weather_query = WeatherQueryEngine()
+        self.weather_frame = WeatherFrame()
         self.error_frame = ErrorFrame()
 
         # First screen update
@@ -79,6 +81,8 @@ class Arriva:
             elif self.status == 2:
                 self.signal_frame_logic()
             elif self.status == 3:
+                self.weather_frame_logic()
+            else:
                 self.error_frame_logic()
         except Exception as e:
             self.error_frame_logic(e)
@@ -142,6 +146,21 @@ class Arriva:
 
         self.epd.display(self.epd.getbuffer(image))
 
+    def weather_frame_logic(self):
+        """
+        Logic to handle weather frame.
+        """
+        
+        # get_weather_forecast(self, latitude, longitude):
+        latitude = self.config['Latitude']
+        longitude = self.config['Longitude']
+
+        forecast = self.weather_query.get_weather_forecast(latitude, longitude)
+        forecast = forecast['forecast']['day']
+        image = self.weather_frame.get(forecast)
+
+        self.epd.display(self.epd.getbuffer(image))
+
     def error_frame_logic(self, error=None):
         """
         Logic to handle error frame.
@@ -185,7 +204,7 @@ class Arriva:
         """
         Callback function for button 4 press. This is the update button. It does not update the status, but calls the display logic again.
         """
-
+        self.status = 4
         self.update_screen()
         print("Button 4 pressed")
 

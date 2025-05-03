@@ -18,8 +18,8 @@ class ConnectionsQueryEngine:
         # Read the API key from the YAML file
         with open(credentials_path, 'r') as file:
             config = yaml.safe_load(file)
-            self.api_key = config['api_key']
-            self.url = config['url']
+            self.api_key = config['OpenTransportData']['api_key']
+            self.url = config['OpenTransportData']['url']
 
         self.headers = {
             'Content-Type': 'application/xml',
