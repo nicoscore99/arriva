@@ -12,7 +12,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from .transformations import invert_colors, png_to_bmp, on_raspi, draw_multiline_text
+from transformations import invert_colors, png_to_bmp, on_raspi, draw_multiline_text
 
 font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
@@ -29,14 +29,15 @@ class MainFrame:
         self.GRAY4  = 0x00 #Blackest
 
         # Define points globally
-        self.P1 = (132, 0)
+        self.P1 = (88, 0)
         self.P2 = (0, 44)
-        self.P3 = (132+44, 0)
-        self.P4 = (132+44+44, 0)
-        self.P5 = (132, 44)
-        self.P6 = (132+44, 44)
-        self.P7 = (132+44+44, 44)
+        self.P3 = (88+44, 0)
+        self.P4 = (88+44+44, 0)
+        self.P5 = (88, 44)
+        self.P6 = (88+44, 44)
+        self.P7 = (88+44+44, 44)
         self.P8 = (264, 44)
+        self.P9 = (88+44+44+44, 0)
 
         # Text placement
         self.T1 = (8, 12)
@@ -58,6 +59,9 @@ class MainFrame:
         self.icon_train = png_to_bmp(picdir, 'train.png').resize((40, 40))
         self.icon_train = ImageOps.expand(self.icon_train, border=2, fill=255)  # Add a white border
         self.icon_location = png_to_bmp(picdir, 'location.png').resize((20, 20))
+        # self.icon_location = ImageOps.expand(self.icon_location, border=2, fill=255)
+        self.icon_weather = png_to_bmp(picdir, 'weather.png').resize((40, 40))
+        self.icon_weather = ImageOps.expand(self.icon_weather, border=2, fill=255)
 
         # Generate the image
         self.Limage = Image.new('L', (PIL_WIDTH, PIL_HEIGHT), 255)
@@ -66,7 +70,8 @@ class MainFrame:
         # Mainframe0],
         self.Limage.paste(self.icon_train, (self.P1[0], self.P1[1]))
         self.Limage.paste(self.icon_signal, (self.P3[0], self.P3[1]))
-        self.Limage.paste(self.icon_error, (self.P4[0], self.P4[1]))
+        self.Limage.paste(self.icon_weather, (self.P4[0], self.P4[1]))
+        self.Limage.paste(self.icon_error, (self.P9[0], self.P9[1]))
 
         self.draw.line(self.P2+self.P8, fill=0, width=2)
 
@@ -78,7 +83,8 @@ class MainFrame:
         # Re-draw the main frame elements
         self.Limage.paste(self.icon_train, (self.P1[0], self.P1[1]))
         self.Limage.paste(self.icon_signal, (self.P3[0], self.P3[1]))
-        self.Limage.paste(self.icon_error, (self.P4[0], self.P4[1]))
+        self.Limage.paste(self.icon_weather, (self.P4[0], self.P4[1]))
+        self.Limage.paste(self.icon_error, (self.P9[0], self.P9[1]))
         self.draw.line(self.P2+self.P8, fill=0, width=2)
 
     def get(self, *args):
@@ -100,7 +106,7 @@ class ConnectionsFrame(MainFrame):
         self.Limage.paste(icon_train, (self.P1[0], self.P1[1]))
 
         # Draw title
-        self.draw.text(self.T1, 'Departure', font=font24, fill=0, anchor="lt")
+        self.draw.text(self.T1, 'Arrival', font=font24, fill=0, anchor="lt")
 
         # Set current location
         self.Limage.paste(self.icon_location, (self.C1[0], self.C1[1]))
@@ -192,8 +198,8 @@ class WeatherFrame(MainFrame):
         self.reset()
 
         # Invert the image of the weather
-        icon_weather = invert_colors(self.icon_signal)
-        self.Limage.paste(icon_weather, (self.P3[0], self.P3[1]))
+        icon_weather = invert_colors(self.icon_weather)
+        self.Limage.paste(icon_weather, (self.P4[0], self.P4[1]))
 
         # Draw title
         self.draw.text(self.T1, 'Weather', font=font24, fill=0, anchor="lt")
@@ -235,7 +241,7 @@ class ErrorFrame(MainFrame):
 
         # Invert the image of the error
         icon_error = invert_colors(self.icon_error)
-        self.Limage.paste(icon_error, (self.P4[0], self.P4[1]))
+        self.Limage.paste(icon_error, (self.P9[0], self.P9[1]))
 
         # Draw title
         self.draw.text(self.T1, 'Error', font=font24, fill=0, anchor="lt")
