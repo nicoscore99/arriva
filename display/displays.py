@@ -29,15 +29,15 @@ class MainFrame:
         self.GRAY4  = 0x00 #Blackest
 
         # Define points globally
-        self.P1 = (88, 0)
+        self.P1 = (0+33, 22)
         self.P2 = (0, 44)
-        self.P3 = (88+44, 0)
-        self.P4 = (88+44+44, 0)
+        self.P3 = (66+33, 22)
+        self.P4 = (66*2+33, 22)
         self.P5 = (88, 44)
         self.P6 = (88+44, 44)
         self.P7 = (88+44+44, 44)
         self.P8 = (264, 44)
-        self.P9 = (88+44+44+44, 0)
+        self.P9 = (66*3+33, 22)
 
         # Text placement
         self.T1 = (8, 12)
@@ -68,10 +68,10 @@ class MainFrame:
         self.draw = ImageDraw.Draw(self.Limage)
 
         # Mainframe0],
-        self.Limage.paste(self.icon_train, (self.P1[0], self.P1[1]))
-        self.Limage.paste(self.icon_signal, (self.P3[0], self.P3[1]))
-        self.Limage.paste(self.icon_weather, (self.P4[0], self.P4[1]))
-        self.Limage.paste(self.icon_error, (self.P9[0], self.P9[1]))
+        self.Limage.paste(self.icon_train, (self.P1[0]-22, self.P1[1]-22))
+        self.Limage.paste(self.icon_signal, (self.P3[0]-22, self.P3[1]-22))
+        self.Limage.paste(self.icon_weather, (self.P4[0]-22, self.P4[1]-22))
+        self.Limage.paste(self.icon_error, (self.P9[0]-22, self.P9[1]-22))
 
         self.draw.line(self.P2+self.P8, fill=0, width=2)
 
@@ -81,10 +81,10 @@ class MainFrame:
         self.draw = ImageDraw.Draw(self.Limage)
 
         # Re-draw the main frame elements
-        self.Limage.paste(self.icon_train, (self.P1[0], self.P1[1]))
-        self.Limage.paste(self.icon_signal, (self.P3[0], self.P3[1]))
-        self.Limage.paste(self.icon_weather, (self.P4[0], self.P4[1]))
-        self.Limage.paste(self.icon_error, (self.P9[0], self.P9[1]))
+        self.Limage.paste(self.icon_train, (self.P1[0]-22, self.P1[1]-22))
+        self.Limage.paste(self.icon_signal, (self.P3[0]-22, self.P3[1]-22))
+        self.Limage.paste(self.icon_weather, (self.P4[0]-22, self.P4[1]-22))
+        self.Limage.paste(self.icon_error, (self.P9[0]-22, self.P9[1]-22))
         self.draw.line(self.P2+self.P8, fill=0, width=2)
 
     def get(self, *args):
@@ -103,11 +103,7 @@ class ConnectionsFrame(MainFrame):
 
         # Invert the image of train
         icon_train = invert_colors(self.icon_train)
-        self.Limage.paste(icon_train, (self.P1[0], self.P1[1]))
-
-        # Draw title
-        self.draw.text(self.T1, 'Arrival', font=font24, fill=0, anchor="lt")
-
+        self.Limage.paste(icon_train, (self.P1[0]-22, self.P1[1]-22))
         # Set current location
         self.Limage.paste(self.icon_location, (self.C1[0], self.C1[1]))
         self.draw.text(self.C2, args[0], font=font18, fill=0, anchor="lt")
@@ -149,10 +145,7 @@ class SignalFrame(MainFrame):
 
         # Invert the image of the signal
         icon_signal = invert_colors(self.icon_signal)
-        self.Limage.paste(icon_signal, (self.P3[0], self.P3[1]))
-
-        # Draw title
-        self.draw.text(self.T1, 'Signal', font=font24, fill=0, anchor="lt")
+        self.Limage.paste(icon_signal, (self.P3[0]-22, self.P3[1]-22))
 
         # First args is SSID, second args is signal strength
         if len(args) > 2: 
@@ -199,10 +192,7 @@ class WeatherFrame(MainFrame):
 
         # Invert the image of the weather
         icon_weather = invert_colors(self.icon_weather)
-        self.Limage.paste(icon_weather, (self.P4[0], self.P4[1]))
-
-        # Draw title
-        self.draw.text(self.T1, 'Weather', font=font24, fill=0, anchor="lt")
+        self.Limage.paste(icon_weather, (self.P4[0]-22, self.P4[1]-22))
 
         # Take the first 6 elements only
         forecasts = args[0][:4]
@@ -241,10 +231,7 @@ class ErrorFrame(MainFrame):
 
         # Invert the image of the error
         icon_error = invert_colors(self.icon_error)
-        self.Limage.paste(icon_error, (self.P9[0], self.P9[1]))
-
-        # Draw title
-        self.draw.text(self.T1, 'Error', font=font24, fill=0, anchor="lt")
+        self.Limage.paste(icon_error, (self.P9[0]-22, self.P9[1]-22))
 
         error_text = args[0]
 

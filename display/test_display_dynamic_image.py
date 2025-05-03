@@ -100,7 +100,6 @@ def main():
             # Rotate image by 90 degrees
             # image = image.rotate(90, expand=True)
             image.show()
-            image.save("connections_frame.png")
             time.sleep(5)
             # Close the image window
             image.close()
