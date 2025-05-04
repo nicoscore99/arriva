@@ -1,6 +1,7 @@
 import sys
 import os
 from PIL import Image,ImageDraw,ImageFont
+import numpy as np
 
 def invert_colors(bitmap_image):
     """
@@ -114,3 +115,35 @@ def draw_multiline_text(w, h, font, text):
         draw.text((x, y), line.strip(), font=font, fill=0)
 
     return image
+
+def apply_black_neighbor_filter(image):
+    # Convert image to grayscale (mode 'L') and then to numpy array
+    gray = image.convert('L')
+    img_array = np.array(gray)
+
+    # Create a binary mask: 1 for black (0), 0 for white (255)
+    black = (img_array == 0).astype(np.uint8)
+
+    # Count black neighbors using numpy slicing
+    up    = np.roll(black,  1, axis=0)
+    down  = np.roll(black, -1, axis=0)
+    left  = np.roll(black,  1, axis=1)
+    right = np.roll(black, -1, axis=1)
+
+    # Set borders to zero (since rolled arrays wrap around)
+    up[0, :] = 0
+    down[-1, :] = 0
+    left[:, 0] = 0
+    right[:, -1] = 0
+
+    # Sum black neighbors
+    neighbor_sum = up + down + left + right
+
+    # Create new mask: pixels that have at least 3 black neighbors
+    result_mask = (neighbor_sum >= 3)
+
+    # Apply mask: turn those pixels black
+    output_array = np.where(result_mask, 0, img_array)
+
+    # Convert back to PIL image
+    return Image.fromarray(output_array.astype(np.uint8), mode='L')

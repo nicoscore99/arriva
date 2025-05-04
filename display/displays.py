@@ -12,7 +12,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from transformations import invert_colors, png_to_bmp, on_raspi, draw_multiline_text
+from .transformations import invert_colors, png_to_bmp, on_raspi, draw_multiline_text, apply_black_neighbor_filter
 
 font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
@@ -205,6 +205,7 @@ class WeatherFrame(MainFrame):
             image_name = str(forecast['SYMBOL_CODE'])+'.png'
             icon_weather = png_to_bmp(picdir, image_name).resize((60, 60))
             icon_weather = ImageOps.expand(icon_weather, border=2, fill=255)
+            icon_weather = apply_black_neighbor_filter(icon_weather)
 
             self.Limage.paste(icon_weather, (self.weather_positions[i][0]-30, self.weather_positions[i][1]-30))
 
