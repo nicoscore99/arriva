@@ -66,7 +66,7 @@ class WeatherQueryEngine:
         headers = {
             'Authorization': f'Bearer {self.access_token}'
         }
-        forecast_url = f"{self.forecast_url}/{latitude},{longitude}"
+        forecast_url = f"{self.forecast_url}/{latitude:.4f},{longitude:.4f}"
 
         # print the request URL for debugging
         print(f"Requesting forecast from: {forecast_url}")
@@ -87,7 +87,7 @@ def main():
     weather_query = WeatherQueryEngine()
 
     latitude = 47.4467
-    longitude = 9.4051
+    longitude = 9.4050
 
     forecast_data = weather_query.get_weather_forecast(latitude, longitude)
     print("Forecast Data:", forecast_data)

@@ -120,4 +120,5 @@ For questions or support, contact [Nicolas Stillhard](mailto:nicolas.stillhard@g
 Stuff that can be improved:
 
 - Expand EPD functionality to prevent blinking every time the screen changes
+- Write tests for the queries (But how to run from Github server with credentials?)
 - Flake8 the code
