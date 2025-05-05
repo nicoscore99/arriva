@@ -119,6 +119,6 @@ For questions or support, contact [Nicolas Stillhard](mailto:nicolas.stillhard@g
 
 Stuff that can be improved:
 
-- Expand EPD functionality to prevent blinking every time the screen changes
+- ~~Expand EPD functionality to prevent blinking every time the screen changes~~ --> not possible in 2.7 inch epaper V1, only V2
 - Write tests for the queries (But how to run from Github server with credentials?)
-- Flake8 the code
+- ~~Flake8 the code~~ --> to much effort, waveshare_epd is not to flake8 standards either

@@ -1,13 +1,16 @@
 #!/bin/bash
 
+# Activate the virtual environment
+source /home/env_arriva/bin/activate
+
 # Move to the script directory
-cd "$(dirname "$0")"
+cd /home/arriva
 
 # Wait for network
 sleep 15
 
 # Log start
-echo "$(date) - Starting arriva.py" >> startup.log
+echo "$(date) - Starting Arriva script" >> arriva.log
 
 # Run Python script
-/usr/bin/python3 arriva.py >> arriva.log 2>&1
+/usr/bin/python3 arriva.py

@@ -12,3 +12,6 @@ __pycache__/
 
 # Credentials
 backend/credentials.yaml
+
+# .log files
+*.log
