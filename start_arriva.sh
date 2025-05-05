@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Activate the virtual environment
-source /home/env_arriva/bin/activate
+source /home/pi/env_arriva/bin/activate
 
 # Move to the script directory
-cd /home/arriva
+cd /home/pi/arriva
 
 # Wait for network
 sleep 15
