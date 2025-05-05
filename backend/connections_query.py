@@ -3,16 +3,14 @@
 import requests
 import xml.etree.ElementTree as ET
 import yaml
-
-# Add file to system path
 import sys
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 
 class ConnectionsQueryEngine:
     def __init__(self):
-        
         credentials_path = os.path.join(os.path.dirname(__file__), 'credentials.yaml')
 
         # Read the API key from the YAML file

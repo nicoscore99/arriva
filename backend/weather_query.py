@@ -1,14 +1,12 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 import requests
-import xml.etree.ElementTree as ET
 import yaml
 import time
 
 # Add file to system path
 import sys
 import os
-from datetime import datetime, timedelta
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 class WeatherQueryEngine:
@@ -80,7 +78,7 @@ class WeatherQueryEngine:
         self.forecast_timer = time.time()
 
         return forecast_data
-    
+
 
 def main():
     print("Weather Query Engine Test")
@@ -91,6 +89,7 @@ def main():
 
     forecast_data = weather_query.get_weather_forecast(latitude, longitude)
     print("Forecast Data:", forecast_data)
+
 
 if __name__ == "__main__":
     main()

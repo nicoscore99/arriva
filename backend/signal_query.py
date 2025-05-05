@@ -1,6 +1,4 @@
 import pywifi
-from pywifi import const
-import time
 import subprocess
 import re
 
