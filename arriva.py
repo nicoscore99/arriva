@@ -58,6 +58,10 @@ class Arriva:
         self.weather_frame = WeatherFrame()
         self.error_frame = ErrorFrame()
 
+        # global timer
+        self.timer = None
+        self.timer_interval = 60  # seconds
+
         # First screen update
         self.update_screen()
 
@@ -96,8 +100,10 @@ class Arriva:
             # Check the status and display the corresponding frame
             self.update_screen()             
             
-            # Wait 1 minute before checking again
-            time.sleep(60)
+            # Global timer
+            self.timer = time.time() + self.timer_interval
+            while time.time() < self.timer:
+                time.sleep(1)
 
     def connections_formatting(self, connections):
         conn_formatted = []
@@ -182,6 +188,7 @@ class Arriva:
         """
         self.status = 1
         self.update_screen()
+        self.timer = time.time() + self.timer_interval  # Reset the timer
         print("Button 1 pressed")
 
     def button2_callback(self):
@@ -190,6 +197,7 @@ class Arriva:
         """
         self.status = 2
         self.update_screen()
+        self.timer = time.time() + self.timer_interval
         print("Button 2 pressed")
 
     def button3_callback(self):
@@ -198,6 +206,7 @@ class Arriva:
         """
         self.status = 3
         self.update_screen()
+        self.timer = time.time() + self.timer_interval
         print("Button 3 pressed")
 
     def button4_callback(self):
@@ -206,6 +215,7 @@ class Arriva:
         """
         self.status = 4
         self.update_screen()
+        self.timer = time.time() + self.timer_interval
         print("Button 4 pressed")
 
 if __name__ == '__main__':
