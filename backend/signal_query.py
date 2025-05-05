@@ -1,8 +1,9 @@
 import pywifi
 import subprocess
 import re
-
-
+import os
+# Set the full path to the iwgetid command
+os.environ['PATH'] = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 class SignalQueryEngine:
     """
