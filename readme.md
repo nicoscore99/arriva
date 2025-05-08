@@ -1,6 +1,6 @@
 # Arriva
 
-Arriva is a Raspberry Pi-based system designed to display public transport connections and alerts at a specified location. It integrates with APIs to fetch real-time data and uses an e-paper display for energy-efficient, clear, and persistent information.
+Arriva is a Raspberry Pi-based system designed to display public transport connections and alerts at a specified location, as well as the lastes weather information for the upcoming few days. It integrates with APIs to fetch real-time data and uses an e-paper display for energy-efficient, clear, and persistent information.
 
 Illustration of the information that is being displayed:
 Illustration of the information that is being displayed:
