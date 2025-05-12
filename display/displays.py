@@ -62,6 +62,9 @@ class MainFrame:
         # self.icon_location = ImageOps.expand(self.icon_location, border=2, fill=255)
         self.icon_weather = png_to_bmp(picdir, 'weather.png').resize((40, 40))
         self.icon_weather = ImageOps.expand(self.icon_weather, border=2, fill=255)
+        
+        # Load the logo
+        self.icon_logo = png_to_bmp(picdir, 'logo.png').resize((PIL_WIDTH, PIL_HEIGHT))
 
         # Generate the image
         self.Limage = Image.new('L', (PIL_WIDTH, PIL_HEIGHT), 255)
@@ -249,3 +252,19 @@ class ErrorFrame(MainFrame):
         self.Limage.paste(error_image, (self.P2[0] + x_padding, self.P2[1] + y_padding))
 
         return image
+    
+class LogoFrame(MainFrame):
+    def __init__(self):
+        super().__init__()
+
+    def get(self, *args):
+        # Get the image from the parent class
+        image = super().get(*args)
+
+        # Reset the image
+        self.reset()
+
+        # Paste the logo image
+        self.Limage.paste(self.icon_logo, (0, 0))
+
+        return self.Limage
