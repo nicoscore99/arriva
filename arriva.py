@@ -24,18 +24,6 @@ BUTTON_PINS = {
     'button4': 19
 }
 
-def signal_handler(sig, frame):
-    """
-    Signal handler to clean up GPIO and exit the program gracefully.
-    """
-    print("Exiting...")
-
-
-
-    for button in BUTTON_PINS.values():
-        button.close()
-    
-
 class Arriva:
     def __init__(self, config_path='config/arriva_config.yaml'):
         """
@@ -57,6 +45,8 @@ class Arriva:
         self.button2 = Button(BUTTON_PINS['button2'])
         self.button3 = Button(BUTTON_PINS['button3'])
         self.button4 = Button(BUTTON_PINS['button4'])
+
+        self.buttons = [self.button1, self.button2, self.button3, self.button4]
 
         self.button1.when_pressed = self.button1_callback
         self.button2.when_pressed = self.button2_callback
@@ -90,7 +80,7 @@ class Arriva:
         image = self.logo_frame.get()
         self.epd.display(self.epd.getbuffer(image))
         print("Exiting...")
-        for button in BUTTON_PINS.values():
+        for button in self.buttons:
             button.close()
         sys.exit(0)
 
