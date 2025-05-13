@@ -82,7 +82,6 @@ class Arriva:
         print("Exiting...")
         for button in self.buttons:
             button.close()
-        sys.exit(0)
 
     def load_config(self):
         """
