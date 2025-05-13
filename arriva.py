@@ -4,11 +4,12 @@ import os
 import threading
 import yaml
 import sys
+import signal, sys, time
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'display')))
 
-from display.displays import ConnectionsFrame, SignalFrame, ErrorFrame, WeatherFrame
+from display.displays import ConnectionsFrame, SignalFrame, ErrorFrame, WeatherFrame, LogoFrame
 from backend.weather_query import WeatherQueryEngine
 from backend.connections_query import ConnectionsQueryEngine
 from backend.signal_query import SignalQueryEngine
@@ -22,6 +23,18 @@ BUTTON_PINS = {
     'button3': 13,
     'button4': 19
 }
+
+def signal_handler(sig, frame):
+    """
+    Signal handler to clean up GPIO and exit the program gracefully.
+    """
+    print("Exiting...")
+
+
+
+    for button in BUTTON_PINS.values():
+        button.close()
+    
 
 class Arriva:
     def __init__(self, config_path='config/arriva_config.yaml'):
@@ -57,6 +70,7 @@ class Arriva:
         self.weather_query = WeatherQueryEngine()
         self.weather_frame = WeatherFrame()
         self.error_frame = ErrorFrame()
+        self.logo_frame = LogoFrame()
 
         # global timer
         self.timer = None
@@ -64,6 +78,21 @@ class Arriva:
 
         # First screen update
         self.update_screen()
+
+        # Register signal handler for graceful
+        signal.signal(signal.SIGINT, self.signal_handler)
+        signal.signal(signal.SIGTERM, self.signal_handler)
+
+    def signal_handler(self, sig, frame):
+        """
+        Signal handler to clean up GPIO and exit the program gracefully.
+        """
+        image = self.logo_frame.get()
+        self.epd.display(self.epd.getbuffer(image))
+        print("Exiting...")
+        for button in BUTTON_PINS.values():
+            button.close()
+        sys.exit(0)
 
     def load_config(self):
         """
