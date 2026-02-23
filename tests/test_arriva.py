@@ -40,6 +40,20 @@ def _import_arriva():
         sys.modules["waveshare_epd"] = waveshare_epd
         sys.modules["waveshare_epd.epd2in7_V2"] = epd2in7_V2
 
+    if "pywifi" not in sys.modules:
+        pywifi = types.ModuleType("pywifi")
+
+        class DummyIface:
+            def __init__(self):
+                pass
+
+        class DummyPyWiFi:
+            def interfaces(self):
+                return [DummyIface()]
+
+        pywifi.PyWiFi = DummyPyWiFi
+        sys.modules["pywifi"] = pywifi
+
     return importlib.import_module("arriva").Arriva
 
 
