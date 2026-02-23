@@ -1,8 +1,7 @@
 # Arriva
 
-Arriva is a Raspberry Pi-based system designed to display public transport connections and alerts at a specified location, as well as the lastes weather information for the upcoming few days. It integrates with APIs to fetch real-time data and uses an e-paper display for energy-efficient, clear, and persistent information.
+Arriva is a Raspberry Pi-based system designed to display public transport connections and alerts at a specified location, as well as the latest weather information for the upcoming few days. It integrates with APIs to fetch real-time data and uses an e-paper display for energy-efficient, clear, and persistent information.
 
-Illustration of the information that is being displayed:
 Illustration of the information that is being displayed:
 <p align="center" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; justify-items: center;">
   <img src="pic/connections_frame.png" alt="Image 1" width="40%" style="border: 2px solid black; padding: 5px;" />
@@ -22,23 +21,19 @@ Illustration of the information that is being displayed:
 ## Project Structure
 
 ```
-├── arriva.py                # Main application logic
-├── backend/                 # Handles API queries and data processing
-│   ├── connections_query.py # Fetches connection data
-│   ├── signal_query.py      # Fetches signal data
-|   ├── weather_query.py     # Queries weather signal
-│   └── credentials.yaml     # API credentials
-├── display/                 # Manages display logic
-│   ├── displays.py          # Frame rendering logic
-│   └── test_display_dynamic_image.py # Display tests
-├── waveshare_epd/           # E-paper display drivers
-│   ├── epd2in7_V2.py        # Driver for 2.7-inch e-paper display
-│   └── epdconfig.py         # Hardware configuration
-├── config/                  # Configuration files
-│   └── arriva_config.yaml   # User-defined settings
-├── tests/                   # Unit tests
-├── setup.py                 # Installation script
-└── readme.md                # Project documentation
+arriva.py                  # Main application logic
+backend/                   # Handles API queries and data processing
+  connections_query.py     # Fetches connection data
+  signal_query.py          # Fetches signal data
+  weather_query.py         # Queries weather signal
+  credentials.example.yaml # API credentials template
+display/                   # Manages display logic
+  displays.py              # Frame rendering logic
+waveshare_epd/             # E-paper display drivers
+config/                    # Configuration files
+  arriva_config.yaml       # User-defined settings
+tests/                     # Unit tests
+readme.md                  # Project documentation
 ```
 
 ## Installation
@@ -53,9 +48,13 @@ Illustration of the information that is being displayed:
    ```bash
    pip install -r requirements.txt
    ```
+   On a Raspberry Pi, install the hardware-specific dependencies as well:
+   ```bash
+   pip install -r requirements-pi.txt
+   ```
 
 3. Set up the API credentials:
-   - Edit `backend/credentials.yaml` with your API key and URL.
+   - Copy `backend/credentials.example.yaml` to `backend/credentials.yaml` and edit with your API credentials.
 
 4. Configure the system:
    - Modify `config/arriva_config.yaml` to set your preferences.
@@ -119,6 +118,6 @@ For questions or support, contact [Nicolas Stillhard](mailto:nicolas.stillhard@g
 
 Stuff that can be improved:
 
-- ~~Expand EPD functionality to prevent blinking every time the screen changes~~ --> not possible in 2.7 inch epaper V1, only V2
-- Write tests for the queries (But how to run from Github server with credentials?)
-- ~~Flake8 the code~~ --> to much effort, waveshare_epd is not to flake8 standards either
+- Expand EPD functionality to prevent blinking every time the screen changes (not possible in 2.7 inch epaper V1, only V2)
+- Write tests for the queries (but how to run from GitHub server with credentials?)
+- Flake8 the code (waveshare_epd is not flake8 compliant)

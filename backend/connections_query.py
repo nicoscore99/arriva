@@ -11,7 +11,10 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 class ConnectionsQueryEngine:
     def __init__(self):
-        credentials_path = os.path.join(os.path.dirname(__file__), 'credentials.yaml')
+        credentials_path = os.environ.get(
+            "ARRIVA_CREDENTIALS_PATH",
+            os.path.join(os.path.dirname(__file__), "credentials.yaml"),
+        )
 
         # Read the API key from the YAML file
         with open(credentials_path, 'r') as file:
@@ -69,10 +72,11 @@ class ConnectionsQueryEngine:
             </OJP>'''
         
         # Send the request to the API
-        response = requests.post(self.url, headers=self.headers, data=xml_request)
-
-        if not response.status_code == 200:
-            raise Exception(f"Error: {response.status_code} - {response.text}")
+        try:
+            response = requests.post(self.url, headers=self.headers, data=xml_request, timeout=10)
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            raise Exception(f"Connections API request failed: {exc}") from exc
 
         # Parse the XML response
         root = ET.fromstring(response.content)

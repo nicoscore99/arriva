@@ -1,10 +1,11 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timezone
 import time
 import os
 import threading
 import yaml
 import sys
-import signal, sys, time
+import signal
+from dateutil import parser
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'backend')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'display')))
@@ -127,18 +128,33 @@ class Arriva:
     def connections_formatting(self, connections):
         conn_formatted = []
         for conn in connections:
-        
-            # Handle cases where fractional seconds are missing
-            departure_time = conn['DepartureTime']
-            if '.' not in departure_time:
-                departure_time = departure_time.replace('Z', '.000000Z')
-            
-            # Calculate the time difference in minutes
-            time_diff = datetime.strptime(departure_time, '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.utcnow()
-            # Convert to minutes
-            time_diff_minutes = int(time_diff.total_seconds() / 60)
+
+            departure_time = conn.get('DepartureTime')
+            parsed_departure = None
+
+            if departure_time:
+                try:
+                    parsed_departure = parser.isoparse(departure_time)
+                except (ValueError, TypeError):
+                    parsed_departure = None
+
+            if parsed_departure is not None:
+                if parsed_departure.tzinfo is None:
+                    parsed_departure = parsed_departure.replace(tzinfo=timezone.utc)
+                parsed_departure = parsed_departure.astimezone(timezone.utc)
+
+                # Calculate the time difference in minutes
+                time_diff = parsed_departure - datetime.now(timezone.utc)
+                time_diff_minutes = int(time_diff.total_seconds() / 60)
+                minutes_display = str(time_diff_minutes)
+            else:
+                minutes_display = "?"
+
+            service_name = conn.get('ServiceName') or ""
+            destination = conn.get('Destination') or ""
+
             # Format the connection element
-            conn_element = (conn['ServiceName'], conn['Destination'], str(time_diff_minutes))
+            conn_element = (service_name, destination, minutes_display)
             conn_formatted.append(conn_element)
 
         return conn_formatted
@@ -232,7 +248,6 @@ class Arriva:
         """
         Callback function for button 4 press. This is the update button. It does not update the status, but calls the display logic again.
         """
-        self.status = 4
         self.update_screen()
         self.timer = time.time() + self.timer_interval
         print("Button 4 pressed")

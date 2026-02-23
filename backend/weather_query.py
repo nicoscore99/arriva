@@ -11,7 +11,10 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 class WeatherQueryEngine:
     def __init__(self):
-        credentials_path = os.path.join(os.path.dirname(__file__), 'credentials.yaml')
+        credentials_path = os.environ.get(
+            "ARRIVA_CREDENTIALS_PATH",
+            os.path.join(os.path.dirname(__file__), "credentials.yaml"),
+        )
 
         # Read the API key from the YAML file
         with open(credentials_path, 'r') as file:
@@ -36,13 +39,16 @@ class WeatherQueryEngine:
         Get a new access token using OAuth client credentials.
         """
         
-        auth_response = requests.get(
-            self.auth_url,
-            params={'grant_type': 'client_credentials'},
-            auth=(self.client_id, self.client_secret)
-        )
-        
-        auth_response.raise_for_status()
+        try:
+            auth_response = requests.get(
+                self.auth_url,
+                params={'grant_type': 'client_credentials'},
+                auth=(self.client_id, self.client_secret),
+                timeout=10
+            )
+            auth_response.raise_for_status()
+        except requests.RequestException as exc:
+            raise Exception(f"Auth token request failed: {exc}") from exc
 
         self.access_token_timer = time.time()
 
@@ -66,14 +72,20 @@ class WeatherQueryEngine:
         }
         forecast_url = f"{self.forecast_url}/{latitude:.4f},{longitude:.4f}"
 
-        # print the request URL for debugging
-        print(f"Requesting forecast from: {forecast_url}")
-        print(f"Using access token: {self.access_token}")
+        try:
+            forecast_response = requests.get(
+                forecast_url,
+                headers=headers,
+                params=self.params,
+                timeout=10
+            )
+            forecast_response.raise_for_status()
+            forecast_data = forecast_response.json()
+        except requests.RequestException as exc:
+            if self.forecast is not None:
+                return self.forecast
+            raise Exception(f"Forecast request failed: {exc}") from exc
 
-        forecast_response = requests.get(forecast_url, headers=headers, params=self.params)
-
-        forecast_response.raise_for_status()
-        forecast_data = forecast_response.json()
         self.forecast = forecast_data
         self.forecast_timer = time.time()
 

@@ -1,0 +1,7 @@
+-r requirements.txt
+colorzero==2.0
+gpiozero==2.0.1
+lgpio==0.2.2.0
+pywifi==1.1.12
+RPi.GPIO==0.7.1
+spidev==3.6

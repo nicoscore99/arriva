@@ -8,6 +8,7 @@ __pycache__/
 *.ipynb
 
 # Pytest cache files
+.pytest_cache/
 __pycache__/
 
 # Credentials
@@ -15,3 +16,7 @@ backend/credentials.yaml
 
 # .log files
 *.log
+
+# Binary artifacts
+*.so
+*.pyd
